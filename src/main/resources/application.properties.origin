@@ -1,15 +1,15 @@
 spring.application.name=animal_and_wish_for_the_everyday
-bot.name=подставляется имя бота
-bot.token=подставляется токен бота
+bot.name=РёРјСЏ Р±РѕС‚Р°, РєРѕС‚РѕСЂРѕРіРѕ РІС‹ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°Р»Рё РІ BotFather
+bot.token=С‚РѕРєРµРЅ РІР°С€РµРіРѕ Р±РѕС‚Р°, РєРѕС‚РѕСЂРѕРіРѕ РІР°Рј РґР°Р» BotFather
 
 #Data properties
 spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:postgresql://localhost:5432/ваша БД
-spring.datasource.username= ваш username
-spring.datasource.password= ваш зфыыцщкв
+spring.datasource.url=jdbc:postgresql://localhost:5432/РІР°С€Р° Р‘Р°Р·Р° РґР°РЅРЅС‹С…
+spring.datasource.username= Р’Р°С€ username
+spring.datasource.password= Р’Р°С€ password
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 spring.jpa.show-sql=true
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 
-###ДЛЯ РАБОТЫ ИЗМЕНИТЬ НАЗВАНИЕ ЭТОГО ФАЙЛА НА application.properties
+###РґР»СЏ Р·Р°РїСѓСЃРєР° СѓРґР°Р»РёС‚СЊ РёР· РЅР°Р·РІР°РЅРёСЏ СЌС‚РѕРіРѕ С„Р°Р№Р»Р° .origin
