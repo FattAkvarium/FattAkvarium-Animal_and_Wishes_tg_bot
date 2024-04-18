@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.fattAkvarium.animal_and_wish_for_the_everyday.service.Smiles.*;
+
 /**
  * Реализация TelegramBotService
  */
@@ -68,19 +70,6 @@ public class DefaultTelegramBotService implements TelegramBotService {
      */
     private final static int NUMBERS_OF_WISHES = 50;
 
-    /**
-     * строковое представление смайликов с https://emojipedia.org/
-     */
-    private static final String ANGEL_SMILE = "\uD83D\uDE07";
-
-    private static final String DEMON_SMILE = "\uD83D\uDC7F";
-
-    private static final String CAT_SMILE = "\uD83D\uDC08";
-
-    private static final String DOG_SMILE = "\uD83D\uDC36";
-
-    private static final String SHIT_SMILE = "\uD83D\uDCA9";
-
     private SendMessage message = new SendMessage();
 
     public DefaultTelegramBotService(AnimalImageRepository animalImageRepository, UserRepository userRepository, AbsSender absSender, WishRepository wishRepository) {
@@ -92,7 +81,7 @@ public class DefaultTelegramBotService implements TelegramBotService {
             this.absSender.execute(new SetMyCommands(commandList(), new BotCommandScopeDefault(), null));
         } catch (TelegramApiException exception) {
             log.error("Error setting bot is command list: " + exception.getMessage());
-            }
+        }
     }
 
     public List<BotCommand> commandList() {

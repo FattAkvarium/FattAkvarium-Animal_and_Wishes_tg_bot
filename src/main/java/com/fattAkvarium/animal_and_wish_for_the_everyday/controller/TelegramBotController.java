@@ -11,6 +11,8 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import static com.fattAkvarium.animal_and_wish_for_the_everyday.service.Smiles.*;
+
 /**
  * класс, наследуемый от TelegramLongPollingBot(библиотека telegram)
  * Здесь содержится логика для непосредственного взаимодействия с ботом.
@@ -24,18 +26,6 @@ public class TelegramBotController extends TelegramLongPollingBot {
      */
     private final BotConfig botConfig;
 
-    /**
-     * строковое представление смайликов с https://emojipedia.org/
-     */
-    private static final String ANGEL_SMILE = "\uD83D\uDE07";
-
-    private static final String DEMON_SMILE = "\uD83D\uDC7F";
-
-    private static final String CAT_SMILE = "\uD83D\uDC08";
-
-    private static final String DOG_SMILE = "\uD83D\uDC36";
-
-    private static final String SHIT_SMILE = "\uD83D\uDCA9";
 
     /**
      * дефолотное сообщение, для ответов на несуществующие запросы.
@@ -85,21 +75,21 @@ public class TelegramBotController extends TelegramLongPollingBot {
 
             switch (messageText) {
                 case "/start" -> {
-                    telegramBotService.registerUser(update.getMessage());
-                    telegramBotService.startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
-                    telegramBotService.choiceWish(chatId);
+                    registerUser(update);
+                    startCommandReceived(chatId, update);
+                    choiceWish(chatId);
                 }
                 case ANGEL_SMILE + CAT_SMILE , DEMON_SMILE + CAT_SMILE,
                         ANGEL_SMILE + DOG_SMILE, DEMON_SMILE + DOG_SMILE -> {
-                    telegramBotService.sendImage(chatId, messageText);
-                    telegramBotService.sendMessage(chatId, telegramBotService.sendWishes(messageText));
+                    sendImage(chatId, messageText);
+                    sendMessageWithWishes(chatId, messageText);
                 }
                 case "/deletedata" -> {
-                    telegramBotService.deleteUserData(chatId);
-                    telegramBotService.sendMessage(chatId, "Ваши данные удалены из базы бота." +
+                    deleteUser(chatId);
+                    sendMessage(chatId, "Ваши данные удалены из базы бота." +
                             " Для повторной регистрации нажмите /start");
                 }
-                default -> telegramBotService.sendMessage(chatId, EmojiParser.parseToUnicode(DEFAULT_MSG));
+                default -> sendMessage(chatId, EmojiParser.parseToUnicode(DEFAULT_MSG));
             }
 
         } else if (update.hasCallbackQuery()) {
@@ -107,12 +97,9 @@ public class TelegramBotController extends TelegramLongPollingBot {
             long messageId = update.getCallbackQuery().getMessage().getMessageId();
             long chatId = update.getCallbackQuery().getMessage().getChatId();
             EditMessageText message = new EditMessageText();
-            switch (callBackData) {
-                case "ANGEL_CAT_BUTTON", "ANGEL_DOG_BUTTON", "DEMON_CAT_BUTTON", "DEMON_DOG_BUTTON" -> {
-                    executeEditMessageText(message, callBackData, messageId, chatId);
-                    telegramBotService.sendImage(chatId, callBackData);
-                }
-            }
+
+            executeEditMessageText(message, callBackData, messageId, chatId);
+            sendImage(chatId, callBackData);
         }
     }
 
@@ -133,6 +120,34 @@ public class TelegramBotController extends TelegramLongPollingBot {
         } catch (TelegramApiException exception) {
             log.error("Error occurred: " + exception.getMessage());
         }
+    }
+
+    private void sendImage(long chatId, String choiceAnimal) {
+        telegramBotService.sendImage(chatId, choiceAnimal);
+    }
+
+    private void sendMessageWithWishes(long chatId, String messageText) {
+        telegramBotService.sendMessage(chatId, telegramBotService.sendWishes(messageText));
+    }
+
+    private void deleteUser(long chatId) {
+        telegramBotService.deleteUserData(chatId);
+    }
+
+    private void registerUser(Update update){
+        telegramBotService.registerUser(update.getMessage());
+    }
+
+    private void startCommandReceived(long chatId, Update update) {
+        telegramBotService.startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
+    }
+
+    private void choiceWish(long chatId) {
+        telegramBotService.choiceWish(chatId);
+    }
+
+    private void sendMessage(long chatId, String message) {
+        telegramBotService.sendMessage(chatId, message);
     }
 }
 
