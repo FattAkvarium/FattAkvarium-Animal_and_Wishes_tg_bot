@@ -122,30 +122,63 @@ public class TelegramBotController extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Метод отправляющий изображение через telegramBotService
+     * @param chatId id пользователя
+     * @param choiceAnimal строковое представление выбранного животного
+     */
     private void sendImage(long chatId, String choiceAnimal) {
         telegramBotService.sendImage(chatId, choiceAnimal);
     }
 
+    /**
+     * Метод отправляющий сообщение с пожеланием через telegramBotService
+     * @param chatId id пользователя
+     * @param messageText сообщение от пользователя с выбранным пожеланием(доброе/злое)
+     */
     private void sendMessageWithWishes(long chatId, String messageText) {
         telegramBotService.sendMessage(chatId, telegramBotService.sendWishes(messageText));
     }
 
+    /**
+     * Метод для удаления пользователя из БД users через telegramBotService
+     * @param chatId id пользователя
+     */
     private void deleteUser(long chatId) {
         telegramBotService.deleteUserData(chatId);
     }
 
+    /**
+     * Метод регистрации пользователя в БД users через telegramBotService
+     * @param update данные о пользователе
+     */
     private void registerUser(Update update){
         telegramBotService.registerUser(update.getMessage());
     }
 
+    /**
+     * Метод отправляющий стартовое сообщение после вызова пользователем команды /start
+     * через telegramBotService
+     * @param chatId id пользователя
+     * @param update данные о пользователе
+     */
     private void startCommandReceived(long chatId, Update update) {
         telegramBotService.startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
     }
 
+    /**
+     * Выбор пожелания из БД wish через telegramBotService
+     * @param chatId id пользователя
+     */
     private void choiceWish(long chatId) {
         telegramBotService.choiceWish(chatId);
     }
 
+    /**
+     * Отправка сообщения пользователю через telegramBotService
+     * @param chatId id пользователя
+     * @param message сообщение, которое будет отправлено
+     */
     private void sendMessage(long chatId, String message) {
         telegramBotService.sendMessage(chatId, message);
     }

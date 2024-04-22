@@ -38,6 +38,10 @@ public class User {
      */
     private Timestamp registeredAt;
 
+    /**
+     * Переопределенный метод toString
+     * @return строковое представление заполненного класса User
+     */
     @Override
     public String toString() {
         return "User{" +

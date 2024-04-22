@@ -259,7 +259,13 @@ public class DefaultTelegramBotService implements TelegramBotService {
      */
     private int randomNumber(int max) {
         max -= 1;
-        return (int) (Math.random() * ++max) + 1;
+        int last = 1;
+        int result = (int) (Math.random() * ++max) + 1;
+        if (result == last) {
+            result = (int) (Math.random() * ++max) + 1;
+        }
+        last = result;
+        return result;
     }
 
     /**
